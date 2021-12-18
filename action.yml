@@ -1,0 +1,15 @@
+name: 'CUE tool installer'
+description: 'Install a specific version of CUE. You must provide a valid semantic version string like v0.4.0'
+inputs:
+  version:
+    description: 'Version of cue'
+    required: true
+    default: 'latest'
+outputs:
+  cue-path:
+    description: 'Path to the cached CUE binary'
+branding:
+  color: 'blue'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
