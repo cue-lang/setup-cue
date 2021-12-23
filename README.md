@@ -16,7 +16,7 @@ latest stable release of `cue`. Releases of `cue` are listed
   id: install
 ```
 
-The inputs and outputs schema are best described using CUE itself:
+The input and output schemas are best described using CUE itself:
 
 ```cue
 #inputs: {
@@ -35,6 +35,11 @@ Please refer to [`actions.yml`](actions.yml) for more details.
 The cached `cue` binary path is prepended to the `PATH` environment variable and
 can be executed directly in later workflow steps. It is also stored in the
 `cuectl-path` output variable.
+
+## Issues/Discussions
+
+Please use the [main CUE repository](https://github.com/cue-lang/cue) to raise
+issues or start discussions about the `setup-cue` action.
 
 ## Contributing
 
