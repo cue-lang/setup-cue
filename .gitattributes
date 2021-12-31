@@ -1,2 +1,3 @@
 /.github/workflows/*.yml linguist-generated
-/cue.mod/pkg/* linguist-generated
+/cue.mod/pkg/**/* linguist-generated
+/action.yml linguist-generated
