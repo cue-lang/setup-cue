@@ -73,6 +73,17 @@ describe('Testing all functions in run file.', () => {
     });
 
     test.each([
+        ['arm64', 'arm64'],
+        ['amd64', 'x86_64']
+    ])('getCuectlDownloadURL() must return the URL to download older %s cuectl for Linux based systems', (arch, releaseArch) => {
+        jest.spyOn(os, 'type').mockReturnValue('Linux');
+        const cuectlLinuxUrl = util.format('https://github.com/cue-lang/cue/releases/download/v0.2.2/cue_0.2.2_Linux_%s.tar.gz', releaseArch);
+
+        expect(run.getCuectlDownloadURL('v0.2.2', arch)).toBe(cuectlLinuxUrl);
+        expect(os.type).toBeCalled();
+    });
+
+    test.each([
         ['arm64'],
         ['amd64']
     ])('getCuectlDownloadURL() must return the URL to download %s cuectl for MacOS based systems', (arch) => {
@@ -84,12 +95,32 @@ describe('Testing all functions in run file.', () => {
     });
 
     test.each([
+        ['amd64', 'x86_64']
+    ])('getCuectlDownloadURL() must return the URL to download older %s cuectl for MacOS based systems', (arch, releaseArch) => {
+        jest.spyOn(os, 'type').mockReturnValue('Darwin');
+        const cuectlDarwinUrl = util.format('https://github.com/cue-lang/cue/releases/download/v0.2.2/cue_0.2.2_Darwin_%s.tar.gz', releaseArch);
+
+        expect(run.getCuectlDownloadURL('v0.2.2', arch)).toBe(cuectlDarwinUrl);
+        expect(os.type).toBeCalled();
+    });
+
+    test.each([
         ['amd64']
     ])('getCuectlDownloadURL() must return the URL to download %s cuectl for Windows based systems', (arch) => {
         jest.spyOn(os, 'type').mockReturnValue('Windows_NT');
         const cuectlWindowsUrl = util.format('https://github.com/cue-lang/cue/releases/download/v0.4.0/cue_v0.4.0_windows_%s.zip', arch);
 
         expect(run.getCuectlDownloadURL('v0.4.0', arch)).toBe(cuectlWindowsUrl);
+        expect(os.type).toBeCalled();
+    });
+
+    test.each([
+        ['amd64', 'x86_64']
+    ])('getCuectlDownloadURL() must return the URL to download older %s cuectl for Windows based systems', (arch, releaseArch) => {
+        jest.spyOn(os, 'type').mockReturnValue('Windows_NT');
+        const cuectlWindowsUrl = util.format('https://github.com/cue-lang/cue/releases/download/v0.2.2/cue_0.2.2_Windows_%s.zip', releaseArch);
+
+        expect(run.getCuectlDownloadURL('v0.2.2', arch)).toBe(cuectlWindowsUrl);
         expect(os.type).toBeCalled();
     });
 

@@ -24,6 +24,7 @@ import * as semver from 'semver';
 const cuectlToolName = 'cue';
 const stableCuectlVersion = 'v0.4.0';
 const cuectlAllReleasesUrl = 'https://api.github.com/repos/cue-lang/cue/releases';
+const downloadReleaseUrlBase = 'https://github.com/cue-lang/cue/releases/download';
 
 export function getExecutableExtension(): string {
     if (os.type().match(/^Win/)) {
@@ -69,17 +70,28 @@ export async function getLatestCuectlVersion(): Promise<string> {
 }
 
 export function getCuectlDownloadURL(version: string, arch: string): string {
-    switch (os.type()) {
-        case 'Linux':
-            return util.format('https://github.com/cue-lang/cue/releases/download/%s/cue_%s_linux_%s.tar.gz', version, version, arch);
-
-        case 'Darwin':
-            return util.format('https://github.com/cue-lang/cue/releases/download/%s/cue_%s_darwin_%s.tar.gz', version, version, arch);
-
-        case 'Windows_NT':
-        default:
-            return util.format('https://github.com/cue-lang/cue/releases/download/%s/cue_%s_windows_%s.zip', version, version, arch);
-
+    let cleanVersion = semver.clean(version);
+    if (semver.lt(cleanVersion, '0.3.0')) {
+        let releaseArch = (arch == 'amd64') ? 'x86_64' : arch;
+        switch (os.type()) {
+            case 'Linux':
+                return util.format('%s/%s/cue_%s_Linux_%s.tar.gz', downloadReleaseUrlBase, version, cleanVersion, releaseArch);
+            case 'Darwin':
+                return util.format('%s/%s/cue_%s_Darwin_%s.tar.gz', downloadReleaseUrlBase, version, cleanVersion, releaseArch);
+            case 'Windows_NT':
+            default:
+                return util.format('%s/%s/cue_%s_Windows_%s.zip', downloadReleaseUrlBase, version, cleanVersion, releaseArch);
+        }
+    } else {
+        switch (os.type()) {
+            case 'Linux':
+                return util.format('%s/%s/cue_%s_linux_%s.tar.gz', downloadReleaseUrlBase, version, version, arch);
+            case 'Darwin':
+                return util.format('%s/%s/cue_%s_darwin_%s.tar.gz', downloadReleaseUrlBase, version, version, arch);
+            case 'Windows_NT':
+            default:
+                return util.format('%s/%s/cue_%s_windows_%s.zip', downloadReleaseUrlBase, version, version, arch);
+        }
     }
 }
 
