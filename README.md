@@ -30,7 +30,7 @@ The input and output schemas are best described using CUE itself:
 }
 ```
 
-Please refer to [`actions.yml`](actions.yml) for more details.
+Please refer to [`action.yml`](action.yml) for more details.
 
 The cached `cue` binary path is prepended to the `PATH` environment variable and
 can be executed directly in later workflow steps. It is also stored in the
