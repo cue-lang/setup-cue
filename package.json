@@ -7,7 +7,7 @@
     "build": "tsc --outDir ./lib --rootDir ./src",
     "test": "jest",
     "test-coverage": "jest --coverage",
-	 "dist": "ncc build src/run.ts --license LICENSE"
+    "dist": "ncc build src/run.ts --license LICENSE"
   },
   "repository": {
     "type": "git",
@@ -19,18 +19,18 @@
   "author": "cbrgm",
   "license": "Apache 2.0",
   "devDependencies": {
-    "@types/jest": "^27.0.3",
-    "@types/node": "^16.3.2",
-    "@types/semver": "^7.3.7",
-    "@vercel/ncc": "^0.33.0",
-    "jest": "^27.4.5",
-    "ts-jest": "^27.1.2",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.3",
+    "@types/semver": "^7.3.13",
+    "@vercel/ncc": "^0.33.4",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.5",
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@actions/core": "^1.4.0",
-    "@actions/exec": "^1.1.0",
-    "@actions/tool-cache": "^1.7.1",
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/tool-cache": "^1.7.2",
     "semver": "^6.3.0"
   }
 }

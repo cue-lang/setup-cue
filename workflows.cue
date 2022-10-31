@@ -30,17 +30,17 @@ buildAndTest: github.#Workflow & {
 		steps: [
 			{
 				name: "Checkout"
-				uses: "actions/checkout@v2"
+				uses: "actions/checkout@v3"
 			},
 			{
 				name: "Use node.js 16.x"
-				uses: "actions/setup-node@v2"
+				uses: "actions/setup-node@v3"
 				with: "node-version": 16
 			},
 			{
 				name: "Use CUE"
 				uses: "./"
-				with: version: "v0.4.1-beta.6"
+				with: version: "v0.4.3"
 			},
 			{
 				name: "Check CUE version"
