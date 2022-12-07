@@ -10,7 +10,7 @@ latest stable release of `cue`. Releases of `cue` are listed
 [here](https://github.com/cue-lang/cue/releases).
 
 ```
-- uses: cue-lang/setup-cue@v1
+- uses: cue-lang/setup-cue@v0.0.1
   with:
     version: '<version>' # default is latest
   id: install
