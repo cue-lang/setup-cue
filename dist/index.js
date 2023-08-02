@@ -7177,7 +7177,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = exports.downloadCuectl = exports.getCuectlDownloadURL = exports.getLatestCuectlVersion = exports.isValidRelease = exports.getCuectlOSArchitecture = exports.getExecutableExtension = void 0;
+exports.run = exports.downloadCuectl = exports.getCuectlDownloadURL = exports.getLatestCuectlVersion = exports.getCuectlOSArchitecture = exports.getExecutableExtension = void 0;
 const os = __nccwpck_require__(2037);
 const path = __nccwpck_require__(1017);
 const util = __nccwpck_require__(3837);
@@ -7186,7 +7186,6 @@ const toolCache = __nccwpck_require__(7784);
 const core = __nccwpck_require__(2186);
 const semver = __nccwpck_require__(5911);
 const cuectlToolName = 'cue';
-const stableCuectlVersion = 'v0.4.0';
 const cuectlAllReleasesUrl = 'https://api.github.com/repos/cue-lang/cue/releases';
 function getExecutableExtension() {
     if (os.type().match(/^Win/)) {
@@ -7203,33 +7202,18 @@ function getCuectlOSArchitecture() {
     return arch;
 }
 exports.getCuectlOSArchitecture = getCuectlOSArchitecture;
-// toCheck is valid if it's not a release candidate and greater than the builtin stable version
-function isValidRelease(toCheck, stable) {
-    return toCheck.toString().indexOf('rc') == -1 && semver.gt(toCheck, stable);
-}
-exports.isValidRelease = isValidRelease;
 function getLatestCuectlVersion() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const downloadPath = yield toolCache.downloadTool(cuectlAllReleasesUrl);
             const responseArray = JSON.parse(fs.readFileSync(downloadPath, 'utf8').toString().trim());
-            let latestCuectlVersion = semver.clean(stableCuectlVersion);
-            responseArray.forEach(response => {
-                if (response && response.tag_name) {
-                    let selectedCuectlVersion = semver.clean(response.tag_name.toString());
-                    if (selectedCuectlVersion) {
-                        if (isValidRelease(selectedCuectlVersion, latestCuectlVersion)) {
-                            latestCuectlVersion = selectedCuectlVersion;
-                        }
-                    }
-                }
-            });
-            return "v" + latestCuectlVersion;
+            const versionArray = responseArray.map(function (version) { return semver.clean(version.tag_name); });
+            const latestRelease = semver.maxSatisfying(versionArray, "*"); // this strips pre-release versions
+            return "v" + latestRelease;
         }
         catch (error) {
-            core.warning(util.format("Cannot get the latest cue releases infos from %s. Error %s. Using default builtin version %s.", cuectlAllReleasesUrl, error, stableCuectlVersion));
+            throw new Error(util.format("Cannot get the latest cue releases infos from %s. Error %s.", cuectlAllReleasesUrl, error));
         }
-        return stableCuectlVersion;
     });
 }
 exports.getLatestCuectlVersion = getLatestCuectlVersion;
