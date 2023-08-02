@@ -132,17 +132,21 @@ describe('Testing all functions in run file.', () => {
         const response = JSON.stringify(
             [
                 {
+                    'tag_name': 'v0.2.0'
+                }, {
+                    'tag_name': 'v0.3.0-rc.2'
+                }, {
+                    'tag_name': 'v0.5.0'
+                }, {
                     'tag_name': 'v0.4.0'
                 }, {
-                    'tag_name': 'v0.3.0'
-                }, {
-                    'tag_name': 'v0.2.0'
+                    'tag_name': 'v0.5.0-alpha.1'
                 }
             ]
         );
         jest.spyOn(fs, 'readFileSync').mockReturnValue(response);
 
-        expect(await run.getLatestCuectlVersion()).toBe('v0.4.0');
+        expect(await run.getLatestCuectlVersion()).toBe('v0.5.0');
         expect(toolCache.downloadTool).toBeCalled();
         expect(fs.readFileSync).toBeCalledWith('pathToTool', 'utf8');
     });

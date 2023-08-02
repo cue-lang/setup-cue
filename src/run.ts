@@ -22,7 +22,6 @@ import * as core from '@actions/core';
 import * as semver from 'semver';
 
 const cuectlToolName = 'cue';
-const stableCuectlVersion = 'v0.4.0';
 const cuectlAllReleasesUrl = 'https://api.github.com/repos/cue-lang/cue/releases';
 
 export function getExecutableExtension(): string {
@@ -40,32 +39,16 @@ export function getCuectlOSArchitecture(): string {
     return arch;
 }
 
-// toCheck is valid if it's not a release candidate and greater than the builtin stable version
-export function isValidRelease(toCheck, stable: string): boolean {
-    return toCheck.toString().indexOf('rc') == -1 && semver.gt(toCheck, stable)
-}
-
 export async function getLatestCuectlVersion(): Promise<string> {
     try {
-        const downloadPath = await toolCache.downloadTool(cuectlAllReleasesUrl);
+        const downloadPath  = await toolCache.downloadTool(cuectlAllReleasesUrl);
         const responseArray = JSON.parse(fs.readFileSync(downloadPath, 'utf8').toString().trim());
-        let latestCuectlVersion = semver.clean(stableCuectlVersion);
-        responseArray.forEach(response => {
-            if (response && response.tag_name) {
-                let selectedCuectlVersion = semver.clean(response.tag_name.toString());
-                if (selectedCuectlVersion) {
-                    if (isValidRelease(selectedCuectlVersion, latestCuectlVersion)) {
-                        latestCuectlVersion = selectedCuectlVersion;
-                    }
-                }
-            }
-        });
-        return "v" + latestCuectlVersion;
+	const versionArray  = responseArray.map(function (version) { return semver.clean(version.tag_name) });
+	const latestRelease = semver.maxSatisfying(versionArray, "*"); // this strips pre-release versions
+	return "v" + latestRelease;
     } catch (error) {
-        core.warning(util.format("Cannot get the latest cue releases infos from %s. Error %s. Using default builtin version %s.", cuectlAllReleasesUrl, error, stableCuectlVersion));
+        throw new Error(util.format("Cannot get the latest cue releases infos from %s. Error %s.", cuectlAllReleasesUrl, error));
     }
-
-    return stableCuectlVersion;
 }
 
 export function getCuectlDownloadURL(version: string, arch: string): string {
