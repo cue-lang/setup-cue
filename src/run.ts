@@ -19,10 +19,9 @@ import * as fs from 'fs';
 
 import * as toolCache from '@actions/tool-cache';
 import * as core from '@actions/core';
-import * as semver from 'semver';
 
 const cuectlToolName = 'cue';
-const cuectlAllReleasesUrl = 'https://api.github.com/repos/cue-lang/cue/releases';
+const cuectlLatestReleaseUrl = 'https://proxy.golang.org/cuelang.org/go/@latest';
 
 export function getExecutableExtension(): string {
     if (os.type().match(/^Win/)) {
@@ -41,13 +40,11 @@ export function getCuectlOSArchitecture(): string {
 
 export async function getLatestCuectlVersion(): Promise<string> {
     try {
-        const downloadPath  = await toolCache.downloadTool(cuectlAllReleasesUrl);
-        const responseArray = JSON.parse(fs.readFileSync(downloadPath, 'utf8').toString().trim());
-	const versionArray  = responseArray.map(function (version) { return semver.clean(version.tag_name) });
-	const latestRelease = semver.maxSatisfying(versionArray, "*"); // this strips pre-release versions
-	return "v" + latestRelease;
+        const downloadPath = await toolCache.downloadTool(cuectlLatestReleaseUrl);
+        const response = JSON.parse(fs.readFileSync(downloadPath, 'utf8').toString().trim());
+        return response.Version;
     } catch (error) {
-        throw new Error(util.format("Cannot get the latest cue releases infos from %s. Error %s.", cuectlAllReleasesUrl, error));
+        throw new Error(util.format("Cannot get the latest cue releases infos from %s. Error %s.", cuectlLatestReleaseUrl, error));
     }
 }
 

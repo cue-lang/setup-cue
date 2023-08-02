@@ -129,21 +129,7 @@ describe('Testing all functions in run file.', () => {
 
     test('getLatestCuectlVersion() must download latest version file, read version and return it', async () => {
         jest.spyOn(toolCache, 'downloadTool').mockResolvedValue('pathToTool');
-        const response = JSON.stringify(
-            [
-                {
-                    'tag_name': 'v0.2.0'
-                }, {
-                    'tag_name': 'v0.3.0-rc.2'
-                }, {
-                    'tag_name': 'v0.5.0'
-                }, {
-                    'tag_name': 'v0.4.0'
-                }, {
-                    'tag_name': 'v0.5.0-alpha.1'
-                }
-            ]
-        );
+        const response = '{"Version":"v0.5.0","Time":"2023-04-12T11:01:31Z","Origin":{"VCS":"git","URL":"https://review.gerrithub.io/cue-lang/cue","Ref":"refs/tags/v0.5.0","Hash":"d780488159bd082f9f9d027ab42dd4d9b5d95d5e"}}';
         jest.spyOn(fs, 'readFileSync').mockReturnValue(response);
 
         expect(await run.getLatestCuectlVersion()).toBe('v0.5.0');
