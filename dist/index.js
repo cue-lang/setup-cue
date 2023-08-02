@@ -7184,9 +7184,8 @@ const util = __nccwpck_require__(3837);
 const fs = __nccwpck_require__(7147);
 const toolCache = __nccwpck_require__(7784);
 const core = __nccwpck_require__(2186);
-const semver = __nccwpck_require__(5911);
 const cuectlToolName = 'cue';
-const cuectlAllReleasesUrl = 'https://api.github.com/repos/cue-lang/cue/releases';
+const cuectlLatestReleaseUrl = 'https://proxy.golang.org/cuelang.org/go/@latest';
 function getExecutableExtension() {
     if (os.type().match(/^Win/)) {
         return '.exe';
@@ -7205,14 +7204,12 @@ exports.getCuectlOSArchitecture = getCuectlOSArchitecture;
 function getLatestCuectlVersion() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const downloadPath = yield toolCache.downloadTool(cuectlAllReleasesUrl);
-            const responseArray = JSON.parse(fs.readFileSync(downloadPath, 'utf8').toString().trim());
-            const versionArray = responseArray.map(function (version) { return semver.clean(version.tag_name); });
-            const latestRelease = semver.maxSatisfying(versionArray, "*"); // this strips pre-release versions
-            return "v" + latestRelease;
+            const downloadPath = yield toolCache.downloadTool(cuectlLatestReleaseUrl);
+            const response = JSON.parse(fs.readFileSync(downloadPath, 'utf8').toString().trim());
+            return response.Version;
         }
         catch (error) {
-            throw new Error(util.format("Cannot get the latest cue releases infos from %s. Error %s.", cuectlAllReleasesUrl, error));
+            throw new Error(util.format("Cannot get the latest cue releases infos from %s. Error %s.", cuectlLatestReleaseUrl, error));
         }
     });
 }
