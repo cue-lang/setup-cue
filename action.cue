@@ -4,9 +4,9 @@ import "json.schemastore.org/github"
 
 action: github.#Action & {
 	name:        "Setup CUE environment"
-	description: "Setup a Go environment and add it to the PATH."
+	description: "Setup a CUE environment and add it to the PATH."
 	inputs: version: {
-		description: #"The CUE version to setup. Must be a valid semantic version string like "v0.4.0" or "latest""#
+		description: #"The CUE version to setup. Must be a valid version string like "v0.6.0", or "latest""#
 		required:    true
 		default:     "latest"
 	}
