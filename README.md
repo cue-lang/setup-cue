@@ -6,8 +6,8 @@ Actions runner***
 Use this action in your GitHub Actions workflow to install a specific version of
 [CUE](https://cuelang.org) on your runner. The input `version` is a
 [version](https://go.dev/ref/mod#versions) string like `v0.6.0`, or
-`v0.6.0-beta.1`. You can also use the keyword `latest` (default) to use the
-latest release of `cue`. Releases and pre-releases of `cue` are listed
+`v0.6.0-beta.1`. You can also use the version query `latest` (default) to use
+the latest release of `cue`. Releases and pre-releases of `cue` are listed
 [here](https://github.com/cue-lang/cue/releases).
 
 ```

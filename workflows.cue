@@ -40,7 +40,7 @@ buildAndTest: github.#Workflow & {
 			{
 				name: "Use CUE"
 				uses: "./"
-				with: version: "v0.4.3"
+				with: version: "v0.6.0"
 			},
 			{
 				name: "Check CUE version"

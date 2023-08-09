@@ -22,7 +22,7 @@ jobs:
       - name: Use CUE
         uses: ./
         with:
-          version: v0.4.3
+          version: v0.6.0
       - name: Check CUE version
         run: cue version
       - name: Run tests
