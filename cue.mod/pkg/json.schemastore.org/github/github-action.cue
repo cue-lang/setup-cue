@@ -1,55 +1,65 @@
 package github
 
 #Action: {
-	@jsonschema(schema="http://json-schema.org/draft-07/schema")
-	null | bool | number | string | [...] | {
-		// The name of your action. GitHub displays the `name` in the
-		// Actions tab to help visually identify actions in each job.
-		name: string
+	@jsonschema(schema="http://json-schema.org/draft-07/schema#")
+	@jsonschema(id="https://json.schemastore.org/github-action.json")
 
-		// The name of the action's author.
-		author?: string
+	// The name of your action. GitHub displays the `name` in the
+	// Actions tab to help visually identify actions in each job.
+	name: string
 
-		// A short description of the action.
-		description: string
+	// The name of the action's author.
+	author?: string
 
-		// Input parameters allow you to specify data that the action
-		// expects to use during runtime. GitHub stores input parameters
-		// as environment variables. Input ids with uppercase letters are
-		// converted to lowercase during runtime. We recommended using
-		// lowercase input ids.
-		inputs?: {
-			{[=~"^[_a-zA-Z][a-zA-Z0-9_-]*$" & !~"^()$"]: {
-				// A string description of the input parameter.
-				description: string
+	// A short description of the action.
+	description: string
 
-				// A string shown to users using the deprecated input.
-				deprecationMessage?: string
+	// Input parameters allow you to specify data that the action
+	// expects to use during runtime. GitHub stores input parameters
+	// as environment variables. Input ids with uppercase letters are
+	// converted to lowercase during runtime. We recommended using
+	// lowercase input ids.
+	inputs?: {
+		{[=~"^[_a-zA-Z][a-zA-Z0-9_-]*$" & !~"^()$"]: {
+			// A string description of the input parameter.
+			description: string
 
-				// A boolean to indicate whether the action requires the input
-				// parameter. Set to `true` when the parameter is required.
-				required: bool
+			// A string shown to users using the deprecated input.
+			deprecationMessage?: string
 
-				// A string representing the default value. The default value is
-				// used when an input parameter isn't specified in a workflow
-				// file.
-				default?: string
-			}}
-		}
-		outputs?: _
-		runs:     #["runs-javascript"] | #["runs-composite"] | #["runs-docker"]
+			// A boolean to indicate whether the action requires the input
+			// parameter. Set to `true` when the parameter is required.
+			required?: bool
 
-		// You can use a color and Feather icon to create a badge to
-		// personalize and distinguish your action. Badges are shown next
-		// to your action name in GitHub Marketplace.
-		branding?: {
-			// The background color of the badge.
-			color?: "white" | "yellow" | "blue" | "green" | "orange" | "red" | "purple" | "gray-dark"
-
-			// The name of the Feather icon to use.
-			icon?: "activity" | "airplay" | "alert-circle" | "alert-octagon" | "alert-triangle" | "align-center" | "align-justify" | "align-left" | "align-right" | "anchor" | "aperture" | "archive" | "arrow-down-circle" | "arrow-down-left" | "arrow-down-right" | "arrow-down" | "arrow-left-circle" | "arrow-left" | "arrow-right-circle" | "arrow-right" | "arrow-up-circle" | "arrow-up-left" | "arrow-up-right" | "arrow-up" | "at-sign" | "award" | "bar-chart-2" | "bar-chart" | "battery-charging" | "battery" | "bell-off" | "bell" | "bluetooth" | "bold" | "book-open" | "book" | "bookmark" | "box" | "briefcase" | "calendar" | "camera-off" | "camera" | "cast" | "check-circle" | "check-square" | "check" | "chevron-down" | "chevron-left" | "chevron-right" | "chevron-up" | "chevrons-down" | "chevrons-left" | "chevrons-right" | "chevrons-up" | "circle" | "clipboard" | "clock" | "cloud-drizzle" | "cloud-lightning" | "cloud-off" | "cloud-rain" | "cloud-snow" | "cloud" | "code" | "command" | "compass" | "copy" | "corner-down-left" | "corner-down-right" | "corner-left-down" | "corner-left-up" | "corner-right-down" | "corner-right-up" | "corner-up-left" | "corner-up-right" | "cpu" | "credit-card" | "crop" | "crosshair" | "database" | "delete" | "disc" | "dollar-sign" | "download-cloud" | "download" | "droplet" | "edit-2" | "edit-3" | "edit" | "external-link" | "eye-off" | "eye" | "facebook" | "fast-forward" | "feather" | "file-minus" | "file-plus" | "file-text" | "file" | "film" | "filter" | "flag" | "folder-minus" | "folder-plus" | "folder" | "gift" | "git-branch" | "git-commit" | "git-merge" | "git-pull-request" | "globe" | "grid" | "hard-drive" | "hash" | "headphones" | "heart" | "help-circle" | "home" | "image" | "inbox" | "info" | "italic" | "layers" | "layout" | "life-buoy" | "link-2" | "link" | "list" | "loader" | "lock" | "log-in" | "log-out" | "mail" | "map-pin" | "map" | "maximize-2" | "maximize" | "menu" | "message-circle" | "message-square" | "mic-off" | "mic" | "minimize-2" | "minimize" | "minus-circle" | "minus-square" | "minus" | "monitor" | "moon" | "more-horizontal" | "more-vertical" | "move" | "music" | "navigation-2" | "navigation" | "octagon" | "package" | "paperclip" | "pause-circle" | "pause" | "percent" | "phone-call" | "phone-forwarded" | "phone-incoming" | "phone-missed" | "phone-off" | "phone-outgoing" | "phone" | "pie-chart" | "play-circle" | "play" | "plus-circle" | "plus-square" | "plus" | "pocket" | "power" | "printer" | "radio" | "refresh-ccw" | "refresh-cw" | "repeat" | "rewind" | "rotate-ccw" | "rotate-cw" | "rss" | "save" | "scissors" | "search" | "send" | "server" | "settings" | "share-2" | "share" | "shield-off" | "shield" | "shopping-bag" | "shopping-cart" | "shuffle" | "sidebar" | "skip-back" | "skip-forward" | "slash" | "sliders" | "smartphone" | "speaker" | "square" | "star" | "stop-circle" | "sun" | "sunrise" | "sunset" | "tablet" | "tag" | "target" | "terminal" | "thermometer" | "thumbs-down" | "thumbs-up" | "toggle-left" | "toggle-right" | "trash-2" | "trash" | "trending-down" | "trending-up" | "triangle" | "truck" | "tv" | "type" | "umbrella" | "underline" | "unlock" | "upload-cloud" | "upload" | "user-check" | "user-minus" | "user-plus" | "user-x" | "user" | "users" | "video-off" | "video" | "voicemail" | "volume-1" | "volume-2" | "volume-x" | "volume" | "watch" | "wifi-off" | "wifi" | "wind" | "x-circle" | "x-square" | "x" | "zap-off" | "zap" | "zoom-in" | "zoom-out"
-		}
+			// A string representing the default value. The default value is
+			// used when an input parameter isn't specified in a workflow
+			// file.
+			default?: string
+		}}
 	}
+	outputs?: _
+	runs:     #["runs-javascript"] | #["runs-composite"] | #["runs-docker"]
+
+	// You can use a color and Feather icon to create a badge to
+	// personalize and distinguish your action. Badges are shown next
+	// to your action name in GitHub Marketplace.
+	branding?: {
+		// The background color of the badge.
+		color?: "white" | "yellow" | "blue" | "green" | "orange" | "red" | "purple" | "gray-dark"
+
+		// The name of the Feather icon to use.
+		icon?: "activity" | "airplay" | "alert-circle" | "alert-octagon" | "alert-triangle" | "align-center" | "align-justify" | "align-left" | "align-right" | "anchor" | "aperture" | "archive" | "arrow-down-circle" | "arrow-down-left" | "arrow-down-right" | "arrow-down" | "arrow-left-circle" | "arrow-left" | "arrow-right-circle" | "arrow-right" | "arrow-up-circle" | "arrow-up-left" | "arrow-up-right" | "arrow-up" | "at-sign" | "award" | "bar-chart-2" | "bar-chart" | "battery-charging" | "battery" | "bell-off" | "bell" | "bluetooth" | "bold" | "book-open" | "book" | "bookmark" | "box" | "briefcase" | "calendar" | "camera-off" | "camera" | "cast" | "check-circle" | "check-square" | "check" | "chevron-down" | "chevron-left" | "chevron-right" | "chevron-up" | "chevrons-down" | "chevrons-left" | "chevrons-right" | "chevrons-up" | "circle" | "clipboard" | "clock" | "cloud-drizzle" | "cloud-lightning" | "cloud-off" | "cloud-rain" | "cloud-snow" | "cloud" | "code" | "command" | "compass" | "copy" | "corner-down-left" | "corner-down-right" | "corner-left-down" | "corner-left-up" | "corner-right-down" | "corner-right-up" | "corner-up-left" | "corner-up-right" | "cpu" | "credit-card" | "crop" | "crosshair" | "database" | "delete" | "disc" | "dollar-sign" | "download-cloud" | "download" | "droplet" | "edit-2" | "edit-3" | "edit" | "external-link" | "eye-off" | "eye" | "facebook" | "fast-forward" | "feather" | "file-minus" | "file-plus" | "file-text" | "file" | "film" | "filter" | "flag" | "folder-minus" | "folder-plus" | "folder" | "gift" | "git-branch" | "git-commit" | "git-merge" | "git-pull-request" | "globe" | "grid" | "hard-drive" | "hash" | "headphones" | "heart" | "help-circle" | "home" | "image" | "inbox" | "info" | "italic" | "layers" | "layout" | "life-buoy" | "link-2" | "link" | "list" | "loader" | "lock" | "log-in" | "log-out" | "mail" | "map-pin" | "map" | "maximize-2" | "maximize" | "menu" | "message-circle" | "message-square" | "mic-off" | "mic" | "minimize-2" | "minimize" | "minus-circle" | "minus-square" | "minus" | "monitor" | "moon" | "more-horizontal" | "more-vertical" | "move" | "music" | "navigation-2" | "navigation" | "octagon" | "package" | "paperclip" | "pause-circle" | "pause" | "percent" | "phone-call" | "phone-forwarded" | "phone-incoming" | "phone-missed" | "phone-off" | "phone-outgoing" | "phone" | "pie-chart" | "play-circle" | "play" | "plus-circle" | "plus-square" | "plus" | "pocket" | "power" | "printer" | "radio" | "refresh-ccw" | "refresh-cw" | "repeat" | "rewind" | "rotate-ccw" | "rotate-cw" | "rss" | "save" | "scissors" | "search" | "send" | "server" | "settings" | "share-2" | "share" | "shield-off" | "shield" | "shopping-bag" | "shopping-cart" | "shuffle" | "sidebar" | "skip-back" | "skip-forward" | "slash" | "sliders" | "smartphone" | "speaker" | "square" | "star" | "stop-circle" | "sun" | "sunrise" | "sunset" | "tablet" | "tag" | "target" | "terminal" | "thermometer" | "thumbs-down" | "thumbs-up" | "toggle-left" | "toggle-right" | "trash-2" | "trash" | "trending-down" | "trending-up" | "triangle" | "truck" | "tv" | "type" | "umbrella" | "underline" | "unlock" | "upload-cloud" | "upload" | "user-check" | "user-minus" | "user-plus" | "user-x" | "user" | "users" | "video-off" | "video" | "voicemail" | "volume-1" | "volume-2" | "volume-x" | "volume" | "watch" | "wifi-off" | "wifi" | "wind" | "x-circle" | "x-square" | "x" | "zap-off" | "zap" | "zoom-in" | "zoom-out"
+	}
+
+	#expressionSyntax: =~"""
+		^\\$\\{\\{(.|[\r
+		])*\\}\\}$
+		"""
+
+	#stringContainingExpressionSyntax: =~"""
+		^.*\\$\\{\\{(.|[\r
+		])*\\}\\}.*$
+		"""
 
 	#: "pre-if": string
 
@@ -57,7 +67,7 @@ package github
 
 	#: "runs-javascript": {
 		// The application used to execute the code specified in `main`.
-		using: "node12" | "node16"
+		using: "node12" | "node16" | "node20"
 
 		// The file that contains your action code. The application
 		// specified in `using` executes this file.
@@ -133,6 +143,10 @@ package github
 				[string]: string
 			}
 
+			// Prevents a job from failing when a step fails. Set to true to
+			// allow a job to pass when this step fails.
+			"continue-on-error"?: bool | #expressionSyntax | *false
+
 			// Specifies the working directory where the command is run.
 			"working-directory"?: string
 		}]
@@ -153,8 +167,8 @@ package github
 		// Specifies a key/value map of environment variables to set in
 		// the container environment.
 		env?: {
-			[string]: string
-		}
+			[string]: bool | number | string
+		} | #stringContainingExpressionSyntax
 
 		// Overrides the Docker `ENTRYPOINT` in the `Dockerfile`, or sets
 		// it if one wasn't already specified. Use `entrypoint` when the
