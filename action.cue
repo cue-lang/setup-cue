@@ -16,7 +16,7 @@ action: github.#Action & {
 		color: "blue"
 	}
 	runs: {
-		using: "node16"
+		using: "node20"
 		main:  "dist/index.js"
 	}
 }
