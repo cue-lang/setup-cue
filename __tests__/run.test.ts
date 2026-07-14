@@ -54,7 +54,7 @@ describe('Testing all functions in run file.', () => {
         ['arm', 'arm'],
         ['arm64', 'arm64'],
         ['x64', 'amd64']
-    ])("getCuectlArch() must return on %s os architecture %s cuectl architecture", (osArch, cuectlVersion) => {
+    ] as const)("getCuectlArch() must return on %s os architecture %s cuectl architecture", (osArch, cuectlVersion) => {
         jest.spyOn(os, 'arch').mockReturnValue(osArch);
 
         expect(run.getCuectlOSArchitecture()).toBe(cuectlVersion);

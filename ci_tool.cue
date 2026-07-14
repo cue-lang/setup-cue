@@ -27,7 +27,7 @@ command: vendorgithubschema: {
 	getActionJSONSchema: http.Get & {
 		// Tip link for humans:
 		// https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-action.json
-		url: "https://raw.githubusercontent.com/SchemaStore/schemastore/c3d4b35e7bbd40b2a95191e393f8c0bad340e97f/src/schemas/json/github-action.json"
+		url: "https://raw.githubusercontent.com/SchemaStore/schemastore/01e00802b38350cb7ec257b11c456639a5cd0acf/src/schemas/json/github-action.json"
 	}
 
 	importActionJSONSchema: exec.Run & {
