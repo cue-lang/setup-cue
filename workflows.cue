@@ -33,9 +33,9 @@ buildAndTest: github.#Workflow & {
 				uses: "actions/checkout@v4"
 			},
 			{
-				name: "Use node.js 20.x"
+				name: "Use node.js 24.x"
 				uses: "actions/setup-node@v4"
-				with: "node-version": 20
+				with: "node-version": 24
 			},
 			{
 				name: "Use CUE"
