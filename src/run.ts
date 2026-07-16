@@ -110,4 +110,6 @@ export async function run() {
 }
 
 
-run().catch(core.setFailed);
+if (require.main === module) {
+    run().catch(core.setFailed);
+}

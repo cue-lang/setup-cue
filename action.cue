@@ -1,8 +1,8 @@
 package action
 
-import "json.schemastore.org/github"
+import "cue.dev/x/githubactions"
 
-action: github.#Action & {
+action: githubactions.#Action & {
 	name:        "Setup CUE environment"
 	description: "Setup a CUE environment and add it to the PATH."
 	inputs: version: {

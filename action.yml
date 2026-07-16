@@ -10,9 +10,9 @@ inputs:
 outputs:
   cue-path:
     description: Path to the cached CUE binary
-runs:
-  using: node24
-  main: dist/index.js
 branding:
   color: blue
   icon: terminal
+runs:
+  using: node24
+  main: dist/index.js
