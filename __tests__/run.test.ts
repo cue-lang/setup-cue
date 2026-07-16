@@ -31,23 +31,23 @@ describe('Testing all functions in run file.', () => {
         jest.spyOn(core, 'setOutput').mockImplementation();
 
         expect(await run.run()).toBeUndefined();
-        expect(core.getInput).toBeCalledWith('version', { 'required': true });
-        expect(core.addPath).toBeCalledWith('pathToCachedTool');
-        expect(core.setOutput).toBeCalledWith('cuectl-path', path.join('pathToCachedTool', 'cue'));
+        expect(core.getInput).toHaveBeenCalledWith('version', { 'required': true });
+        expect(core.addPath).toHaveBeenCalledWith('pathToCachedTool');
+        expect(core.setOutput).toHaveBeenCalledWith('cuectl-path', path.join('pathToCachedTool', 'cue'));
     });
 
     test('getExecutableExtension() must return .exe file extension when os equals Windows', () => {
         jest.spyOn(os, 'type').mockReturnValue('Windows_NT');
 
         expect(run.getExecutableExtension()).toBe('.exe');
-        expect(os.type).toBeCalled();
+        expect(os.type).toHaveBeenCalled();
     });
 
     test('getExecutableExtension() must return an empty string for non-windows OS', () => {
         jest.spyOn(os, 'type').mockReturnValue('Darwin');
 
         expect(run.getExecutableExtension()).toBe('');
-        expect(os.type).toBeCalled();
+        expect(os.type).toHaveBeenCalled();
     });
 
     test.each([
@@ -58,7 +58,7 @@ describe('Testing all functions in run file.', () => {
         jest.spyOn(os, 'arch').mockReturnValue(osArch);
 
         expect(run.getCuectlOSArchitecture()).toBe(cuectlVersion);
-        expect(os.arch).toBeCalled();
+        expect(os.arch).toHaveBeenCalled();
     });
 
     test.each([
@@ -69,7 +69,7 @@ describe('Testing all functions in run file.', () => {
         const cuectlLinuxUrl = util.format('https://github.com/cue-lang/cue/releases/download/v0.4.0/cue_v0.4.0_linux_%s.tar.gz', arch);
 
         expect(run.getCuectlDownloadURL('v0.4.0', arch)).toBe(cuectlLinuxUrl);
-        expect(os.type).toBeCalled();
+        expect(os.type).toHaveBeenCalled();
     });
 
     test.each([
@@ -80,7 +80,7 @@ describe('Testing all functions in run file.', () => {
         const cuectlDarwinUrl = util.format('https://github.com/cue-lang/cue/releases/download/v0.4.0/cue_v0.4.0_darwin_%s.tar.gz', arch);
 
         expect(run.getCuectlDownloadURL('v0.4.0', arch)).toBe(cuectlDarwinUrl);
-        expect(os.type).toBeCalled();
+        expect(os.type).toHaveBeenCalled();
     });
 
     test.each([
@@ -90,7 +90,7 @@ describe('Testing all functions in run file.', () => {
         const cuectlWindowsUrl = util.format('https://github.com/cue-lang/cue/releases/download/v0.4.0/cue_v0.4.0_windows_%s.zip', arch);
 
         expect(run.getCuectlDownloadURL('v0.4.0', arch)).toBe(cuectlWindowsUrl);
-        expect(os.type).toBeCalled();
+        expect(os.type).toHaveBeenCalled();
     });
 
     test('downloadCuectl() must download cuectl tarball, add it to github actions tool cache and return the path to extracted dir', async () => {
@@ -103,11 +103,11 @@ describe('Testing all functions in run file.', () => {
         jest.spyOn(fs, 'chmodSync').mockImplementation(() => {});
 
         expect(await run.downloadCuectl('v0.4.0')).toBe(path.join('pathToCachedTool', 'cue'));
-        expect(toolCache.find).toBeCalledWith('cue', 'v0.4.0');
-        expect(toolCache.downloadTool).toBeCalled();
-        expect(toolCache.cacheDir).toBeCalled();
-        expect(os.type).toBeCalled();
-        expect(fs.chmodSync).toBeCalledWith(path.join('pathToCachedTool', 'cue'), '777');
+        expect(toolCache.find).toHaveBeenCalledWith('cue', 'v0.4.0');
+        expect(toolCache.downloadTool).toHaveBeenCalled();
+        expect(toolCache.cacheDir).toHaveBeenCalled();
+        expect(os.type).toHaveBeenCalled();
+        expect(fs.chmodSync).toHaveBeenCalledWith(path.join('pathToCachedTool', 'cue'), '777');
     });
 
     test('downloadCuectl() must download cuectl zip archive, add it to github actions tool cache and return the path to extracted dir', async () => {
@@ -120,11 +120,11 @@ describe('Testing all functions in run file.', () => {
         jest.spyOn(fs, 'chmodSync').mockImplementation(() => {});
 
         expect(await run.downloadCuectl('v0.4.0')).toBe(path.join('pathToCachedTool', 'cue.exe'));
-        expect(toolCache.find).toBeCalledWith('cue', 'v0.4.0');
-        expect(toolCache.downloadTool).toBeCalled();
-        expect(toolCache.cacheDir).toBeCalled();
-        expect(os.type).toBeCalled();
-        expect(fs.chmodSync).toBeCalledWith(path.join('pathToCachedTool', 'cue.exe'), '777');
+        expect(toolCache.find).toHaveBeenCalledWith('cue', 'v0.4.0');
+        expect(toolCache.downloadTool).toHaveBeenCalled();
+        expect(toolCache.cacheDir).toHaveBeenCalled();
+        expect(os.type).toHaveBeenCalled();
+        expect(fs.chmodSync).toHaveBeenCalledWith(path.join('pathToCachedTool', 'cue.exe'), '777');
     });
 
     test('getLatestCuectlVersion() must download latest version file, read version and return it', async () => {
@@ -133,7 +133,7 @@ describe('Testing all functions in run file.', () => {
         jest.spyOn(fs, 'readFileSync').mockReturnValue(response);
 
         expect(await run.getLatestCuectlVersion()).toBe('v0.5.0');
-        expect(toolCache.downloadTool).toBeCalled();
-        expect(fs.readFileSync).toBeCalledWith('pathToTool', 'utf8');
+        expect(toolCache.downloadTool).toHaveBeenCalled();
+        expect(fs.readFileSync).toHaveBeenCalledWith('pathToTool', 'utf8');
     });
 })
