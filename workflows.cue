@@ -1,10 +1,10 @@
 package action
 
-import "json.schemastore.org/github"
+import "cue.dev/x/githubactions"
 
 workflows: [...{
 	filename: string
-	workflow: github.#Workflow
+	workflow: githubactions.#Workflow
 }]
 workflows: [
 	{
@@ -13,7 +13,7 @@ workflows: [
 	},
 ]
 
-buildAndTest: github.#Workflow & {
+buildAndTest: githubactions.#Workflow & {
 	name: "build and test"
 	on: {
 		pull_request: types: [
@@ -56,10 +56,6 @@ buildAndTest: github.#Workflow & {
 			{
 				name: "Build"
 				run:  "npm run dist"
-			},
-			{
-				name: "Re-vendor GitHub schemas"
-				run:  "cue cmd vendorgithubschema"
 			},
 			{
 				name: "Re-gen GitHub Action schema"
