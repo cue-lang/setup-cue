@@ -34121,7 +34121,9 @@ function run() {
         core.setOutput('cuectl-path', cachedCuectlPath);
     });
 }
-run().catch(core.setFailed);
+if (require.main === require.cache[eval('__filename')]) {
+    run().catch(core.setFailed);
+}
 
 
 /***/ }),

@@ -50,6 +50,7 @@ buildAndTest: githubactions.#Workflow & {
 				name: "Run tests"
 				run: """
 					npm ci
+					npm test
 
 					"""
 			},
