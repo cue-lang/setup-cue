@@ -28,6 +28,7 @@ jobs:
       - name: Run tests
         run: |
           npm ci
+          npm test
       - name: Build
         run: npm run dist
       - name: Re-gen GitHub Action schema
