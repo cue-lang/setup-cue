@@ -30,8 +30,6 @@ jobs:
           npm ci
       - name: Build
         run: npm run dist
-      - name: Re-vendor GitHub schemas
-        run: cue cmd vendorgithubschema
       - name: Re-gen GitHub Action schema
         run: cue cmd genaction
       - name: Re-gen GitHub Actions workflows
