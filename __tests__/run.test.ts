@@ -40,8 +40,7 @@ describe('Testing all functions in run file.', () => {
         expect(core.getInput).toHaveBeenCalledWith('version', { 'required': true });
         expect(core.addPath).toHaveBeenCalledWith('pathToCachedTool');
         expect(declaredOutputs).toEqual(['cue-path']);
-        // TODO: run() sets an output name which action.yml does not declare.
-        expect(core.setOutput).toHaveBeenCalledWith('cuectl-path', path.join('pathToCachedTool', 'cue'));
+        expect(core.setOutput).toHaveBeenCalledWith('cue-path', path.join('pathToCachedTool', 'cue'));
     });
 
     test('getExecutableExtension() must return .exe file extension when os equals Windows', () => {
