@@ -11,11 +11,15 @@ the latest release of `cue`. Releases and pre-releases of `cue` are listed
 [here](https://github.com/cue-lang/cue/releases).
 
 ```
-- uses: cue-lang/setup-cue@v1.0.0
+- uses: cue-lang/setup-cue@v2
   with:
     version: '<version>' # default is latest
   id: install
 ```
+
+This action runs on Node 24, which requires Actions Runner v2.327.1 or later.
+GitHub-hosted runners are new enough; self-hosted runners and GitHub Enterprise
+Server installations may need updating.
 
 The input and output schemas are best described using CUE itself:
 
