@@ -20,6 +20,12 @@ import * as path from 'path';
 import * as core from '@actions/core';
 import * as util from 'util';
 
+// action.yml declares the outputs available to workflows, so run() must set
+// exactly those names. Read it here, before any test mocks out fs.
+const declaredOutputs = [...fs.readFileSync(path.join(__dirname, '..', 'action.yml'), 'utf8')
+    .match(/^outputs:\n(?:[ ].*\n)*/m)![0]
+    .matchAll(/^  ([\w-]+):$/gm)].map(m => m[1]);
+
 describe('Testing all functions in run file.', () => {
     test('run() must download specified cuectl version and set output', async () => {
         jest.spyOn(core, 'getInput').mockReturnValue('v0.4.0');
@@ -33,6 +39,8 @@ describe('Testing all functions in run file.', () => {
         expect(await run.run()).toBeUndefined();
         expect(core.getInput).toHaveBeenCalledWith('version', { 'required': true });
         expect(core.addPath).toHaveBeenCalledWith('pathToCachedTool');
+        expect(declaredOutputs).toEqual(['cue-path']);
+        // TODO: run() sets an output name which action.yml does not declare.
         expect(core.setOutput).toHaveBeenCalledWith('cuectl-path', path.join('pathToCachedTool', 'cue'));
     });
 
