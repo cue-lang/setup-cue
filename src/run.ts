@@ -106,7 +106,7 @@ export async function run() {
     core.addPath(path.dirname(cachedCuectlPath));
 
     console.log(`CUE binary version: '${version}' has been cached at ${cachedCuectlPath}`);
-    core.setOutput('cuectl-path', cachedCuectlPath);
+    core.setOutput('cue-path', cachedCuectlPath);
 }
 
 

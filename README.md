@@ -27,7 +27,7 @@ The input and output schemas are best described using CUE itself:
 
 #outputs: {
 	// Path to the cached CUE binary
-	"cuectl-path": string
+	"cue-path": string
 }
 ```
 
@@ -35,7 +35,7 @@ Please refer to [`action.yml`](action.yml) for more details.
 
 The cached `cue` binary path is prepended to the `PATH` environment variable and
 can be executed directly in later workflow steps. It is also stored in the
-`cuectl-path` output variable.
+`cue-path` output variable.
 
 ## Issues/Discussions
 
